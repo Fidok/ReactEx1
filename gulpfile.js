@@ -1,4 +1,4 @@
-const gulp = require('gulp'),
+let gulp = require('gulp'),
       sass = require('gulp-sass');
 
 gulp.task("sass", function () {
