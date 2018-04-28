@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cp -r node_modules/bootstrap/dist/css dist/components/bootstrap/",
     "gulp": "gulp",
-    "webpack" : "webpack && cp src/index.html dist/",
-    "start" : "webpack-dev-server"
+    "webpack": "webpack && cp src/index.html dist/",
+    "start": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Fidok/exUbiwhere#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
