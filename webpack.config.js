@@ -1,8 +1,13 @@
+let path = require("path");
+
 module.exports = {
   entry: "./src/app/index.js",
   output: {
     filename: "bundle.js"
   },
+    devServer: {
+        contentBase : path.join(__dirname, "dist")
+    },
   module: {
     rules: [
       {
