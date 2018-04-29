@@ -8,9 +8,9 @@ export default class Footer extends Component {
 
   render() {
     return (
-      <ul>
+      <div id="footer">
         Footer     
-      </ul>
+      </div>
     )
   }
 }
