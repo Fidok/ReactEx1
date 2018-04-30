@@ -8,10 +8,9 @@ export default class App extends Component {
 
   render() {
     return (
-        <div>
+        <div id="wrapper">
             <Sidebar />
             <Main />
-            <Footer/>
         </div>
     )
   }

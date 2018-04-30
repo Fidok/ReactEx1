@@ -10,7 +10,7 @@ export default class Main extends Component {
 
   render() {
     return (
-        <main id="wrapper">
+        <main id="content" class="container">
             <Switch>
                 <Route exact path='/' component={MusicList} />
                 <Route path='/music/:id' component={MusicDetails} />

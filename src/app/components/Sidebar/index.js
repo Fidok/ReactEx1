@@ -23,7 +23,8 @@ export default class Header extends Component {
     this.state = {
         modalIsOpen: false,
         user:null,
-        email:null
+        email:null,
+        id: null
     };
 
     this.login = this.login.bind(this); 
@@ -57,12 +58,10 @@ export default class Header extends Component {
     
  checkUser() {
         var user=this.getCookie("username");
-     console.log(this.state.user);
+
         if (user != "") {
             this.state.user = user;
-            //this.setState({user: user });
         }
-        console.log(this.state.user);
     };
     
  setCookie(cname,cvalue,exdays) {
@@ -86,6 +85,7 @@ export default class Header extends Component {
         if(login.length === 1){
             this.setState({user: login[0].username, id: login[0].id });
             this.setCookie("username", this.state.user, 1);
+            this.setCookie("id", this.state.id, 1);
         } else {
             alert("Email not found");
         }
@@ -111,7 +111,7 @@ export default class Header extends Component {
         <div class="sidebar-header">
             <img class="logo" src="http://www.ubiwhere.com/static/img/ubiwhere-logo.svg" alt="logo ubiwhere" />
         </div>
-        {this.state.user ? this.state.user : <div><button class="btn btn-primary" type="button" onClick={this.openModal}><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+        {this.state.user ? "Hello, "+this.state.user : <div><button class="btn btn-primary" type="button" onClick={this.openModal}><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
        
         <Modal
           isOpen={this.state.modalIsOpen}

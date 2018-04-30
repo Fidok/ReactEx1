@@ -13,8 +13,7 @@ export default class MusicDetails extends Component {
         music_details : []
         
     };
-  }
-
+ }
   componentDidMount() {
     axios.get(config.api+'musics/'+this.state.music_id)
       .then(res => {
@@ -23,6 +22,7 @@ export default class MusicDetails extends Component {
            this.setState({music_details: details }); 
         }
       })
+      
   }
 
   render() {
