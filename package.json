@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cp -r node_modules/bootstrap/dist dist/components/bootstrap/ && cp -r node_modules/font-awesome dist/components/font-awesome/ ",
     "gulp": "gulp",
-    "webpack": "webpack && cp src/index.html dist/",
+    "webpack": "webpack && cp src/index.html dist/ && gulp",
     "start": "gulp && webpack-dev-server"
   },
   "repository": {
