@@ -1,13 +1,12 @@
+//dependecies
 import React, { Component }  from 'react';
 import axios from 'axios';
 import  { Link } from 'react-router-dom';
-
 import config from '../../config.js';
 import MusicDetails from '../MusicDetails';
 
 
 export default class MusicList extends Component {
-   
  constructor(props) {
     super(props);
     this.state = {
@@ -23,31 +22,30 @@ export default class MusicList extends Component {
     this.removeFavorit= this.removeFavorit.bind(this);
      
     let idUser = this.getCookie("id");
-        if (idUser != "") {
-            this.getFavorits(idUser);
-        }
-            
+    if (idUser != "") {
+        this.getFavorits(idUser);
+    }      
   }
+    
     addFavorit(musicId) {
         let idUser = this.getCookie("id");
         let music = {
             "musicid" : musicId
         }
-        
         if (idUser != "") {
            axios.post(config.api+'users/'+idUser+"/musics", music)
           .then(res => {
-           console.log(res.data);
-            this.setState();
+               this.getFavorits(idUser);
           })
         }
     }
+    
     removeFavorit(musicId) {
         let idUser = this.getCookie("id");
         if (idUser != "") {
         axios.delete(config.api+'users/'+idUser+"/musics/"+musicId)
           .then(res => {   
-           console.log(res.data);
+            this.getFavorits(idUser);
           })
         }
     }
@@ -59,6 +57,7 @@ export default class MusicList extends Component {
             this.setState({ favorits : favorits });
           })
     }
+    
     getCookie(cname) {
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -75,7 +74,6 @@ export default class MusicList extends Component {
         return "";
     }
   componentDidMount() {
- 
     axios.get(config.api+'musics')
       .then(res => {
         const musics = res.data;
@@ -87,53 +85,53 @@ export default class MusicList extends Component {
   render() {
     return (
       <div class="row">
-        <h1> Music List </h1>
-        
+        <h1 class="title"> Music List </h1>
+
         { 
             this.state.musics.map(function (music, index) {
                 let classNameIcon = false;
-        let favorit= false;
-                  this.state.favorits.map(function (favorits) {
-                      
-                      if(favorits.id == music.id) {
-                    favorit=true;  
-                      } 
-                  })
-            if(index%2==1){
-                
-                return (             
-                 <div class="col-md-3">
-                    <div class="boxMusic">
-                    <a onClick={favorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer"><i class= {favorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
-                        <div id='musicBars'>  
-                          <span></span>  
-                          <span></span>  
-                          <span></span>  
-                          <span></span>  
-                          <span></span>  
+                let favorit= false;
+                // check if this music is favorit
+                this.state.favorits.map(function (favorits) {
+                    if(favorits.id == music.id) {
+                        favorit=true;  
+                    } 
+                })
+                // if element is odd or even
+                if(index%2==1){
+                    //odd
+                    return (             
+                     <div class="col-md-3">
+                        <div class="boxMusic">
+                            <a onClick={favorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer pull-right"><i class= {favorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
+                            <div id='musicBars'>  
+                              <span></span>  
+                              <span></span>  
+                              <span></span>  
+                              <span></span>  
+                              <span></span>  
+                            </div>
+                            <h3>{music.track}</h3> 
+                            <div><Link to={'music/' + music.id}><i class="fa fa-info-circle" aria-hidden="true"></i> Details</Link></div>
                         </div>
-                    <h3>{music.track}</h3> 
-                        <div><Link to={'music/' + music.id}><i class="fa fa-info-circle" aria-hidden="true"></i> Details</Link></div>
                     </div>
-                </div>
-                )
+                    )
             } else {
                 return (
-                <div class="col-md-3 col-md-offset-3">
-                    <div class="boxMusic">
-                        <a onClick={favorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer"><i class= {favorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
-                        <div id='musicBars'>  
-                          <span></span>  
-                          <span></span>  
-                          <span></span>  
-                          <span></span>  
-                          <span></span>  
+                    <div class="col-md-3 col-md-offset-3">
+                        <div class="boxMusic">
+                            <a onClick={favorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer pull-right"><i class= {favorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
+                            <div id='musicBars'>  
+                              <span></span>  
+                              <span></span>  
+                              <span></span>  
+                              <span></span>  
+                              <span></span>  
+                            </div>
+                            <h3>{music.track}</h3>
+                            <div><Link to={'music/' + music.id}><i class="fa fa-info-circle" aria-hidden="true"></i> Details</Link></div>
                         </div>
-                    <h3>{music.track}</h3>
-                    
-                        <div><Link to={'music/' + music.id}><i class="fa fa-info-circle" aria-hidden="true"></i> Details</Link></div>
                     </div>
-                </div>
                 )
             }
           }, this)
