@@ -89,7 +89,7 @@ export default class Header extends Component {
             var login = users.filter(function(user){
                 return user.email === email;
             });
-            if(login.length === 1){
+            if(login.length >= 1){
                 this.setState({user: login[0].username, id: login[0].id });
                 this.setCookie("username", this.state.user, 1);
                 this.setCookie("id", this.state.id, 1);
