@@ -54,7 +54,10 @@ export default class MusicList extends Component {
         axios.get(config.api+'users/'+id+"/musics")
           .then(res => {
             const favorits = res.data;
-            this.setState({ favorits : favorits });
+            if (favorits) {
+                this.setState({ favorits : favorits });
+            }
+            
           })
     }
     
@@ -89,14 +92,16 @@ export default class MusicList extends Component {
 
         { 
             this.state.musics.map(function (music, index) {
-                let classNameIcon = false;
                 let favorit= false;
                 // check if this music is favorit
+                if( this.state.favorits.length > 0) {
                 this.state.favorits.map(function (favorits) {
                     if(favorits.id == music.id) {
                         favorit=true;  
                     } 
                 })
+                }
+
                 // if element is odd or even
                 if(index%2==1){
                     //odd
