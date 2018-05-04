@@ -10,16 +10,13 @@ export default class MusicDetails extends Component {
         super(props);
         this.state = {
         music_id: props.match.params.id,
-        music_details : []
+        musicDetails: []
     };
 }
 
     componentDidMount() {
         axios.get(`${config.api}musics/${this.state.music_id}`).then(res => {
-            if (res.data.length === 1) {
-                const details = res.data;
-                this.setState({music_details: details });
-            }
+            this.setState({musicDetails: res.data || [] });
         })
     }
 
@@ -27,7 +24,7 @@ export default class MusicDetails extends Component {
         return (
             <div>
                 <h1 class="title">Music Details</h1>
-                {this.state.music_details.map(function (music) {
+                {this.state.musicDetails.forEach( music => {
                     return (
                         <div>
                             <div class="flex row">

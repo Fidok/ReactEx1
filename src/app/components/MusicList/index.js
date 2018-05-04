@@ -12,25 +12,25 @@ export default class MusicList extends Component {
         this.state = {
             musics: [],
             favorits: [],
-            id: "",
-            musicSelected: ""
+            id: null,
+            musicSelected: null
         };
         this.getCookie = this.getCookie.bind(this);
         this.getFavorits = this.getFavorits.bind(this);
         this.addFavorit = this.addFavorit.bind(this);
         this.removeFavorit= this.removeFavorit.bind(this);
-        let idUser = this.getCookie("id");
+        const idUser = this.getCookie("id");
         if (idUser != "") {
             this.getFavorits(idUser);
         }
     }
 
     addFavorit(musicId) {
-        let idUser = this.getCookie("id");
-        let music = {
+        const idUser = this.getCookie("id");
+        const music = {
             "musicid" : musicId
         }
-        if (idUser != "") {
+        if (idUser !== "") {
            axios.post(`${config.api}users/${idUser}/musics/`, music).then(res => {
                this.getFavorits(idUser);
            })
@@ -38,7 +38,7 @@ export default class MusicList extends Component {
     }
 
     removeFavorit(musicId) {
-        let idUser = this.getCookie("id");
+        const idUser = this.getCookie("id");
         if (idUser != "") {
             axios.delete(`${config.api}users/${idUser}/musics/${musicId}`).then(res => {
                 this.getFavorits(idUser);
@@ -50,17 +50,17 @@ export default class MusicList extends Component {
         axios.get(`${config.api}users/${id}/musics`).then(res => {
             const favorits = res.data;
             if (favorits) {
-                this.setState({ favorits : favorits });
+                this.setState({ favorits });
             }
         })
     }
 
     getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for(var i = 0; i < ca.length; i++) {
-            var c = ca[i];
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
             while (c.charAt(0) == ' ') {
                 c = c.substring(1);
             }
@@ -82,14 +82,12 @@ export default class MusicList extends Component {
         return (
             <div class="row">
                 <h1 class="title"> Music List </h1>
-                {this.state.musics.map(function (music, index) {
-                    let favorit= false;
+                {this.state.musics.forEach(function (music, index) {
+                    let isFavorit= false;
                     // check if this music is favorit
                     if( this.state.favorits.length > 0) {
-                    this.state.favorits.map(function (favorits) {
-                        if(favorits.id == music.id) {
-                            favorit=true;  
-                        } 
+                    this.state.favorits.forEach(favorits =>) {
+                        isFavorit = favorits.id == music.id;
                     })
                 }
                 // if element is odd or even
@@ -98,7 +96,7 @@ export default class MusicList extends Component {
                     return (
                      <div class="col-md-3">
                         <div class="boxMusic">
-                            <a onClick={favorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer pull-right"><i class= {favorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
+                            <a onClick={isFavorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer pull-right"><i class= {favorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
                             <div id='musicBars'>
                                 <span></span>
                                 <span></span>
@@ -115,7 +113,7 @@ export default class MusicList extends Component {
                     return (
                         <div class="col-md-3 col-md-offset-3">
                             <div class="boxMusic">
-                                <a onClick={favorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer pull-right"><i class= {favorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
+                                <a onClick={isFavorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer pull-right"><i class= {favorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
                                 <div id='musicBars'>
                                   <span></span>
                                   <span></span>
