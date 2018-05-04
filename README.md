@@ -10,6 +10,10 @@ This application depends on the [API](https://github.com/Ubiwhere/challenge-api-
 How to install:
 
 ```
+$: git clone https://github.com/Fidok/exUbiwhere.git
+```
+
+```
 $: npm install
 ```
 
