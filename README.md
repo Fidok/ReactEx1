@@ -1,15 +1,20 @@
 # exUbiwhere
-exercicio
+Ubiwhere task request
 
+## Documentation
 
 ### Installing
-Run:
+
+This application depends on the [API](https://github.com/Ubiwhere/challenge-api-rest-node)
+
+How to install:
 
 ```
-npm i
+$: npm install
 ```
 
+```
+$: npm start
+```
 
-```
-npm start
-```
+Open the browser @ [http://localhost:9000/](http://localhost:9000/)
