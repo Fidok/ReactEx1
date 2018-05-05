@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "gulp",
-    "start": "gulp && webpack && webpack-dev-server"
+    "build" : "gulp && webpack",
+    "start": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
     "babel-preset-react": "6.24.1",
+    "file-loader": "^1.1.11",
     "gulp": "3.9.1",
     "gulp-sass": "4.0.1",
     "webpack": "4.6.0",
