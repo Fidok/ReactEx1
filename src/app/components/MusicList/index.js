@@ -1,10 +1,11 @@
 //dependecies
 import React, { Component }  from 'react';
 import axios from 'axios';
-import  { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import config from '../../config.js';
-import MusicDetails from '../MusicDetails';
 
+//assets
+import albumImg from "../../../media/albuns.png";
 
 export default class MusicList extends Component {
     constructor(props) {
@@ -39,7 +40,7 @@ export default class MusicList extends Component {
 
     removeFavorit(musicId) {
         const idUser = this.getCookie("id");
-        if (idUser != "") {
+        if (idUser !== "") {
             axios.delete(`${config.api}users/${idUser}/musics/${musicId}`).then(res => {
                 this.getFavorits(idUser);
             })
@@ -50,7 +51,7 @@ export default class MusicList extends Component {
         axios.get(`${config.api}users/${id}/musics`).then(res => {
             const favorits = res.data;
             if (favorits) {
-                this.setState({ favorits });
+                this.setState({ favorits: favorits });
             }
         })
     }
@@ -80,55 +81,43 @@ export default class MusicList extends Component {
 
     render() {
         return (
-            <div class="row">
-                <h1 class="title"> Music List </h1>
-                {this.state.musics.forEach(function (music, index) {
-                    let isFavorit= false;
-                    // check if this music is favorit
-                    if( this.state.favorits.length > 0) {
-                    this.state.favorits.forEach(favorits =>) {
-                        isFavorit = favorits.id == music.id;
-                    })
-                }
-                // if element is odd or even
-                if(index%2==1){
-                    //odd
-                    return (
-                     <div class="col-md-3">
-                        <div class="boxMusic">
-                            <a onClick={isFavorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer pull-right"><i class= {favorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
-                            <div id='musicBars'>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <h3>{music.track}</h3>
-                            <div><Link to={'music/' + music.id}><i class="fa fa-info-circle" aria-hidden="true"></i> Details</Link></div>
-                        </div>
+            <div class="row musicList">
+                <div class="col-xs-12 col-lg-3 details">
+                    <div class ="col-lg-12 col-xs-4"><img src={albumImg} alt="New musics" /></div>
+                    <div class="col-lg-12 col-xs-8">
+                        <h1>LF</h1>
+                        <div class="name">Léo Ferreira</div>
+                        <div class="songs">99 songs</div>
+                        <button class="btn btn-primary">Play</button>
                     </div>
-                    )
-                } else {
-                    return (
-                        <div class="col-md-3 col-md-offset-3">
-                            <div class="boxMusic">
-                                <a onClick={isFavorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer pull-right"><i class= {favorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
-                                <div id='musicBars'>
-                                  <span></span>
-                                  <span></span>
-                                  <span></span>
-                                  <span></span>
-                                  <span></span>
+                </div>
+                <div class="col-xs-12 col-lg-9">
+                    {this.state.musics.map(function (music, index) {
+                        let isFavorit= false;
+                        // check if this music is favorit
+                        if( this.state.favorits.length > 0) {
+                            this.state.favorits.map(function (favorits) {
+                                if(favorits.id == music.id) {
+                                    isFavorit=true;
+                                }
+                            })
+                        }
+                        return (
+                            <div class="music">
+                                    <a onClick={isFavorit ? this.removeFavorit.bind(this, music.id) : this.addFavorit.bind(this, music.id)} class="pointer pull-left"><i class= {isFavorit ? "fa fa-star iconStarActive" : "fa fa-star-o iconStar"} aria-hidden="true"></i></a>
+                                    <Link to={'music/' + music.id} class="pull-right"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></Link>
+                                    <div class="music-track">{music.track}</div>
+                                    <div>
+                                        <span class="artist">{music.artist}</span>
+                                        <span>&#9900;</span>
+                                        <span class="album">{music.album}</span>
+                                    </div>
                                 </div>
-                                <h3>{music.track}</h3>
-                                <div><Link to={'music/' + music.id}><i class="fa fa-info-circle" aria-hidden="true"></i> Details</Link></div>
-                            </div>
-                        </div>
-                    )
+                            )
+                  }, this)
                 }
-            }, this)}
             </div>
+          </div>
         )
-    }
+      }
 }

@@ -4,6 +4,9 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import config from '../../config.js';
 
+//assets
+import UserImg from "../../../media/user.png";
+
 // settings for modal
 const customStyles = {
     content : {
@@ -18,6 +21,7 @@ const customStyles = {
 };
 
 Modal.setAppElement('#app');
+
 export default class Header extends Component {
     constructor(props) {
         super(props);
@@ -62,7 +66,7 @@ export default class Header extends Component {
     checkUser() {
         const user=this.getCookie("username");
         if (user != "") {
-            this.setState({user};
+            this.state.user = user;
         }
     }
 
@@ -118,33 +122,34 @@ export default class Header extends Component {
 
     render() {
         return (
-            <nav id="sidebar">
-                <div class="sidebar-header">
+            <nav class="sidebar">
+                <div class="sidebar-container">
                     <img class="logo" src="http://www.ubiwhere.com/static/img/ubiwhere-logo.svg" alt="logo ubiwhere" />
+                    <div class="footer">
+                        {this.state.user ? <div><img src={ UserImg } /> {this.state.user} </div> : 
+                            <div>
+                                <button class="btn btn-primary" type="button" onClick={this.openModal}><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+                                <Modal
+                                isOpen={this.state.modalIsOpen}
+                                onAfterOpen={this.afterOpenModal}
+                                onRequestClose={this.closeModal}
+                                style={customStyles}
+                                contentLabel="Login Modal"
+                                overlayClassName="Overlay">
+                                    <h3 ref={subtitle => this.subtitle = subtitle}>Please, insert your email!</h3>
+                                    <hr />
+                                    <form>
+                                        <input id="emailAddress" type="email" />
+                                    </form>
+                                    <hr />
+                                    <button onClick={this.login}><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+                                </Modal>
+                            </div>
+                        }
+                        {this.state.user ? <div><button class="btn btn-primary" type="button" onClick={this.logout}><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button></div> : ""}
+                    </div>
                 </div>
-                {this.state.user ? "Hello, "+this.state.user+"!" : 
-            <div>
-                <button class="btn btn-primary" type="button" onClick={this.openModal}><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
-                <Modal
-                isOpen={this.state.modalIsOpen}
-                onAfterOpen={this.afterOpenModal}
-                onRequestClose={this.closeModal}
-                style={customStyles}
-                contentLabel="Login Modal"
-                overlayClassName="Overlay">
-                    <h3 ref={subtitle => this.subtitle = subtitle}>Please, insert your email!</h3>
-                    <hr />
-                    <form>
-                        <input id="emailAddress" type="email" />
-                    </form>
-                    <hr />
-                    <button onClick={this.login}><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
-                </Modal>
-            </div>
-            }
-            {this.state.user ? <div><button class="btn btn-primary" type="button" onClick={this.logout}><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button></div> : ""
-            }
-        </nav>
+            </nav>
         )
         }
     }

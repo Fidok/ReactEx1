@@ -1,0 +1,56 @@
+.musicList {
+    .details {
+         img {
+            width: 100%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        .songs, .name {
+            color:$color-text-secundary;
+            padding-bottom: 15px;
+        }
+        button {
+            padding-left:30px;
+            padding-right:30px;
+        }
+    }
+    .music {
+        margin:0;
+        padding:10px;
+        text-align: left;
+
+        &:hover {
+            background-color: rgba(0,0,0,.3);
+            
+            a.pull-right {
+                display: block;
+            }
+        }
+
+        &-track {
+            font-size:16px;
+            padding-left: 30px;
+            text-transform: capitalize;
+        }
+
+        span {
+             color:$color-text-secundary;
+        }
+        .artist {
+            padding-left:30px;
+            padding-right:10px;
+            text-transform: capitalize;
+        }
+
+        .album {
+            padding-left:10px;
+            text-transform: capitalize;
+        }
+        a.pull-right {
+            color:white;
+            font-size: 20px;
+            margin-top:10px;
+            margin-right: 20px;
+            display: none;
+        }
+    }
+}

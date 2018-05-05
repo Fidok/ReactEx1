@@ -6,11 +6,11 @@ body {
 }
 
 body {
-    color:$colorText;
-    background: $colorBg1;
-    background: -webkit-linear-gradient(bottom, $colorBg2 0%, $colorBg1 100%);
-    background: -o-linear-gradient(bottom, $colorBg2 0%, $colorBg1 100%);
-    background: linear-gradient(to top, $colorBg2 0%, $colorBg1 100%);
+    color:$color-text;
+    background: $color-bg-secundary;
+    background: -webkit-linear-gradient(bottom, $color-bg-secundary 0%, $color-bg-primary 100%);
+    background: -o-linear-gradient(bottom, $color-bg-secundary 0%, $color-bg-primary 100%);
+    background: linear-gradient(to top, $color-bg-secundary 0%, $color-bg-primary 100%);
     text-align: center;
 }
 a:hover {
@@ -23,84 +23,38 @@ a:hover {
 }
 
 #content {
-    padding-top:100px;
+    padding-left: 244px;
+    padding-right: 24px;
+    padding-bottom: $height-playing-bar;
+    padding-top: 24px;
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+button.btn {
+    border-radius: 50px;
 }
 
 
-
-
-#musicBars{  
-    position:relative;
-    height:30px;
-    width: 35px;
-    margin: auto;
-}  
-
-#musicBars span{  
-  width:5px;  
-  height: 5px;  
-  bottom:0px;
-  position:absolute;  
-  background:$colorBar1;  
-  -webkit-animation: bodong 0.5s infinite  ease;  
-}  
-
-#musicBars span:first-child{  
-  left:0px;  
-  -webkit-animation-delay:.3s;  
-}  
-
-#musicBars span:nth-child(2){  
-  left:7px;  
-  -webkit-animation-delay:.4s;  
-
-}  
-#musicBars span:nth-child(3){  
-  left:14px;  
-  -webkit-animation-delay:.6s;  
-}  
-#musicBars span:nth-child(4){  
-  left:21px;  
-  -webkit-animation-delay:.8s;  
-}  
-#musicBars span:nth-child(5){  
-  left:28px;  
-  -webkit-animation-delay:1s;  
-}  
-
-@-webkit-keyframes bodong{  
-  0%{height:5px; background:$colorBar1;}  
-  30%{height:15px; background:$colorBar2;}  
-  60%{height:20px; background:$colorBar3;}  
-  80%{height:15px; background:$colorBar2;}  
-  100%{height:5px; background:$colorBar1;}  
-}
 .flex {
     display: flex;
 }
 
-.boxMusic {
-        padding: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background: $colorBg1;
-        border-radius: 10px;
-}
 .iconStar {
     color:#fff;
     font-size: 20px;
 }
 .iconStarActive {
     font-size: 20px;
-    color:$colorIcon
+    color:$color-icon
 }
 .pointer {cursor: pointer;}
 
 h1.title {
     margin-bottom:50px;
 }
-.fa-music.big {
-    font-size: 30px;
-}
+
 .top10 {
     margin-top:10px;
 }

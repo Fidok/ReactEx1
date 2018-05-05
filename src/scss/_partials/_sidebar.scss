@@ -1,15 +1,38 @@
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    min-height: 100vh;
-    background: $colorBg1;
-transition: all 0.3s;
+.sidebar {
+    width: $width-sidebar;
+    height: 100vh;
+    padding: 24px;
+    padding-bottom: $height-playing-bar;
+    background: $color-bg-secundary;
+    transition: all 0.3s;
+    position:fixed;
+
+    .logo {
+        width: 100%;
+        padding: 30px 0;
+    }
+
+    &-container {
+        height: 100%;
+        position: relative;
+
+        .footer {
+            width: 100%;
+            position: absolute;
+            bottom:0;
+            text-align: left;
+
+            img {
+                width: $width-avatar;
+            }
+
+            button {
+                margin-top: 10px;
+            }
+        }
+    }
 }
 
-#sidebar .logo {
-    width: 200px;
-    padding: 30px 0;
-}
 
 .Overlay {
     position: fixed;
@@ -19,6 +42,8 @@ transition: all 0.3s;
     bottom: 0;
     background-color: rgba(0, 0, 2, 0.8);
 }
+
+
 .ReactModalPortal {
-    color:$colorTextModal;
+    color:$color-text-modal;
 }

@@ -24,7 +24,7 @@ export default class MusicDetails extends Component {
         return (
             <div>
                 <h1 class="title">Music Details</h1>
-                {this.state.musicDetails.forEach( music => {
+                {this.state.musicDetails.map( music => {
                     return (
                         <div>
                             <div class="flex row">
@@ -44,7 +44,7 @@ export default class MusicDetails extends Component {
                                     <h4>Artist: <small class="text-muted">{music.artist}</small></h4>
                                 </div>
                             </div>
-                            <div class="row top10">           
+                            <div class="row top10">
                                 <Link to='/' class="btn btn-primary">Back</Link>
                             </div>
                         </div>
