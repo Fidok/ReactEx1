@@ -31,11 +31,9 @@ export default class MusicList extends Component {
         }
     }
 
-    addFavorit(musicId) {
+    addFavorit(musicid) {
         const idUser = Cookie.getCookie("id");
-        const music = {
-            "musicid" : musicId
-        }
+        const music = { musicid }
         if (idUser !== "") {
            axios.post(`${config.api}users/${idUser}/musics/`, music).then(res => {
                this.getFavorits(idUser);
@@ -43,10 +41,10 @@ export default class MusicList extends Component {
         }
     }
 
-    removeFavorit(musicId) {
+    removeFavorit(musicid) {
         const idUser = Cookie.getCookie("id");
         if (idUser !== "") {
-            axios.delete(`${config.api}users/${idUser}/musics/${musicId}`).then(res => {
+            axios.delete(`${config.api}users/${idUser}/musics/${musicid}`).then(res => {
                 this.getFavorits(idUser);
             })
         }
@@ -59,7 +57,7 @@ export default class MusicList extends Component {
     }
 
     componentDidMount() {
-        axios.get(config.api+'musics').then(res => {
+        axios.get(`${config.api}musics`).then(res => {
             const musics = res.data;
             this.setState({ musics: musics });
         })
@@ -75,7 +73,7 @@ export default class MusicList extends Component {
                         // check if this music is favorit
                         if( this.state.favorits.length > 0) {
                             this.state.favorits.map(function (favorits) {
-                                if(favorits.id == music.id) {
+                                if(favorits.id === music.id) {
                                     isFavorit=true;
                                 }
                             })

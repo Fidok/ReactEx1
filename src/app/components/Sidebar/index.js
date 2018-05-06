@@ -47,7 +47,7 @@ export default class Header extends Component {
 
     menuEvent() {
         const menu = document.getElementsByClassName('sidebar')[0];
-        (menu.offsetLeft === 0) ? menu.style.marginLeft = '-220px' : menu.style.marginLeft = 0;
+        menu.style.marginLeft = menu.offsetLeft === 0 ? '-220px' : 0;
     }
 
     checkUser() {
@@ -59,14 +59,12 @@ export default class Header extends Component {
 
     login () {
         this.setState({modalIsOpen: false});
-        let email = document.getElementById('emailAddress').value;
+        const email = document.getElementById('emailAddress').value;
         if (email.length > 5) {
-           this.setState({email: email});
+           this.setState({email});
             axios.get(`${config.api}users`).then(res => {
             const users = res.data;
-            var login = users.filter(function(user){
-                return user.email === email;
-            });
+            const login = users.filter(user => user.email === email);
             if(login.length >= 1){
                 this.setState({user: login[0].username, id: login[0].id });
                 Cookie.setCookie("username", this.state.user, 1);
