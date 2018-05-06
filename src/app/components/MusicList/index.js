@@ -54,10 +54,7 @@ export default class MusicList extends Component {
 
     getFavorits(id) {
         axios.get(`${config.api}users/${id}/musics`).then(res => {
-            const favorits = res.data;
-            if (favorits) {
-                this.setState({ favorits: favorits });
-            }
+            this.setState({ favorits: res.data || {}});
         })
     }
 
