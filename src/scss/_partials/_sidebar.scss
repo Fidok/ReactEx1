@@ -6,6 +6,18 @@
     background: $color-bg-secundary;
     transition: all 0.3s;
     position:fixed;
+    z-index:10;
+    transition: all 0.5s ease;
+
+    .menu-mobile {
+        display: none;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        right: -54px;
+        line-height: 30px;
+        background:  $color-bg-secundary;
+    }
 
     .logo {
         width: 100%;
@@ -19,7 +31,7 @@
         .footer {
             width: 100%;
             position: absolute;
-            bottom:0;
+            bottom:10px;
             text-align: left;
 
             img {
@@ -33,7 +45,15 @@
     }
 }
 
+@media (max-width: $xs) {
+    .sidebar {
+        margin-left:-220px;
 
+        .menu-mobile {
+            display: block;
+        }
+    }
+}
 .Overlay {
     position: fixed;
     top: 0;

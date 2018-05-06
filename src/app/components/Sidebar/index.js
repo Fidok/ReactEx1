@@ -3,6 +3,7 @@ import React, { Component }  from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import config from '../../config.js';
+import Cookie from '../../library/cookie.js';
 
 //assets
 import UserImg from "../../../media/user.png";
@@ -38,54 +39,29 @@ export default class Header extends Component {
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        // function cookie
-        this.setCookie = this.setCookie.bind(this);
+        // function chech if user is logged
         this.checkUser = this.checkUser.bind(this);
-        this.getCookie = this.getCookie.bind(this);
-        this.deleteCookie = this.deleteCookie.bind(this);
         // check if user is logged
         this.checkUser();
     }
 
-    getCookie(cname) {
-        let name = cname + "=";
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
-        for(let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
+    menuEvent() {
+        const menu = document.getElementsByClassName('sidebar')[0];
+        (menu.offsetLeft === 0) ? menu.style.marginLeft = '-220px' : menu.style.marginLeft = 0;
     }
 
     checkUser() {
-        const user=this.getCookie("username");
+        const user=Cookie.getCookie("username");
         if (user != "") {
             this.state.user = user;
         }
-    }
-
-    setCookie(cname,cvalue,exdays) {
-        let d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        let expires = "expires=" + d.toGMTString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    deleteCookie( name ) {
-        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
     login () {
         this.setState({modalIsOpen: false});
         let email = document.getElementById('emailAddress').value;
         if (email.length > 5) {
-           this.setState({email: email}); 
+           this.setState({email: email});
             axios.get(`${config.api}users`).then(res => {
             const users = res.data;
             var login = users.filter(function(user){
@@ -93,8 +69,8 @@ export default class Header extends Component {
             });
             if(login.length >= 1){
                 this.setState({user: login[0].username, id: login[0].id });
-                this.setCookie("username", this.state.user, 1);
-                this.setCookie("id", this.state.id, 1);
+                Cookie.setCookie("username", this.state.user, 1);
+                Cookie.setCookie("id", this.state.id, 1);
             } else {
                 alert("Email not found");
             }
@@ -103,8 +79,8 @@ export default class Header extends Component {
     }
 
     logout () {
-        this.deleteCookie("username");
-        this.deleteCookie("id");
+        Cookie.deleteCookie("username");
+        Cookie.deleteCookie("id");
         this.setState({user: null, id: null });
     }
 
@@ -124,11 +100,17 @@ export default class Header extends Component {
         return (
             <nav class="sidebar">
                 <div class="sidebar-container">
+                    <div class="menu-mobile" onClick={this.menuEvent}>
+                        <span class="sr-only">Menu</span>
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                    </div>
                     <img class="logo" src="http://www.ubiwhere.com/static/img/ubiwhere-logo.svg" alt="logo ubiwhere" />
                     <div class="footer">
                         {this.state.user ? <div><img src={ UserImg } /> {this.state.user} </div> : 
                             <div>
-                                <button class="btn btn-primary" type="button" onClick={this.openModal}><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+                                <button class="btn btn-primary" type="button" onClick={this.openModal}>
+                                    <i class="fa fa-sign-in" aria-hidden="true"></i> Login
+                                </button>
                                 <Modal
                                 isOpen={this.state.modalIsOpen}
                                 onAfterOpen={this.afterOpenModal}

@@ -2,10 +2,16 @@
 import React, { Component }  from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
+//parts
+import Details from "./details.js";
+
+//configs
 import config from '../../config.js';
 
-//assets
-import albumImg from "../../../media/albuns.png";
+//library
+import Cookie from '../../library/cookie.js';
+
 
 export default class MusicList extends Component {
     constructor(props) {
@@ -16,18 +22,17 @@ export default class MusicList extends Component {
             id: null,
             musicSelected: null
         };
-        this.getCookie = this.getCookie.bind(this);
         this.getFavorits = this.getFavorits.bind(this);
         this.addFavorit = this.addFavorit.bind(this);
         this.removeFavorit= this.removeFavorit.bind(this);
-        const idUser = this.getCookie("id");
+        const idUser = Cookie.getCookie("id");
         if (idUser != "") {
             this.getFavorits(idUser);
         }
     }
 
     addFavorit(musicId) {
-        const idUser = this.getCookie("id");
+        const idUser = Cookie.getCookie("id");
         const music = {
             "musicid" : musicId
         }
@@ -39,7 +44,7 @@ export default class MusicList extends Component {
     }
 
     removeFavorit(musicId) {
-        const idUser = this.getCookie("id");
+        const idUser = Cookie.getCookie("id");
         if (idUser !== "") {
             axios.delete(`${config.api}users/${idUser}/musics/${musicId}`).then(res => {
                 this.getFavorits(idUser);
@@ -56,22 +61,6 @@ export default class MusicList extends Component {
         })
     }
 
-    getCookie(cname) {
-        let name = cname + "=";
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
-        for(let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
-
     componentDidMount() {
         axios.get(config.api+'musics').then(res => {
             const musics = res.data;
@@ -82,15 +71,7 @@ export default class MusicList extends Component {
     render() {
         return (
             <div class="row musicList">
-                <div class="col-xs-12 col-lg-3 details">
-                    <div class ="col-lg-12 col-xs-4"><img src={albumImg} alt="New musics" /></div>
-                    <div class="col-lg-12 col-xs-8">
-                        <h1>LF</h1>
-                        <div class="name">Léo Ferreira</div>
-                        <div class="songs">99 songs</div>
-                        <button class="btn btn-primary">Play</button>
-                    </div>
-                </div>
+                <Details />
                 <div class="col-xs-12 col-lg-9">
                     {this.state.musics.map(function (music, index) {
                         let isFavorit= false;

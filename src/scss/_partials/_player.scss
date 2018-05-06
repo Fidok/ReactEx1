@@ -1,0 +1,27 @@
+.player-bar {
+    height: $height-playing-bar;
+    background: $color-bg-player;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    padding-top:10px;
+    z-index: 20;
+
+    .fa-play-circle-o {
+        font-size:30px;
+        color:$color-text;
+    }
+
+    .fa {
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .icon {
+        width: 30px;
+        display: inline;
+        display: inline-table;
+        vertical-align: middle;
+        line-height: 30px;
+    }
+}

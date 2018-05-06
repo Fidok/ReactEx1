@@ -13,6 +13,7 @@ body {
     background: linear-gradient(to top, $color-bg-secundary 0%, $color-bg-primary 100%);
     text-align: center;
 }
+
 a:hover {
     text-decoration: none;
 }
@@ -29,17 +30,13 @@ a:hover {
     padding-top: 24px;
     width: 100%;
     height: 100vh;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 
 button.btn {
     border-radius: 50px;
 }
 
-
-.flex {
-    display: flex;
-}
 
 .iconStar {
     color:#fff;
@@ -55,6 +52,8 @@ h1.title {
     margin-bottom:50px;
 }
 
-.top10 {
-    margin-top:10px;
+@media (max-width: $xs) {
+    #content {
+        padding-left:24px;
+    }
 }
