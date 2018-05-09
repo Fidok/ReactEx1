@@ -1,5 +1,5 @@
-# exUbiwhere
-Ubiwhere task request
+# ReactJs
+Primeiro exercicio em react, basicamente recebe dados (de musicas) de uma API e ao fazer login (sem autenticação) permite que seja aditionadas ou retiradas dos favoritos (API)
 
 ## Documentation
 
